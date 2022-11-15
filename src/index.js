@@ -31,4 +31,32 @@ document.addEventListener('DOMContentLoaded', () => {
             adatok.appendChild(li);
         }
     });
+
+    document.getElementById('the').addEventListener('click', async () => {
+        //Bekérés
+        let response = await fetch('./quotes.json');
+        let eredmeny = await response.json();
+
+        //tömb feltöltése
+        let tomb = [];
+        for(let p of eredmeny.quotes){
+            let sor = p.quote;
+            sor = sor.replaceAll(" the ", "<b> the </b>");
+            sor = sor.replaceAll("The ", "<b>The </b>");
+            console.log(sor);
+            tomb.push(sor);
+        }
+
+        //Eltűntetés
+        let adatok = document.getElementById('adatok');
+        adatok.textContent = '';
+
+        //Kiiratás felsorolásként
+        for(let p of tomb){
+            let li = document.createElement('li');
+            li.innerHTML = p;
+            adatok.appendChild(li);
+        }
+
+    })
 })
