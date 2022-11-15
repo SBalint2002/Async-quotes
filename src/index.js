@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let sor = p.quote;
             sor = sor.replaceAll(" the ", "<b> the </b>");
             sor = sor.replaceAll("The ", "<b>The </b>");
-            console.log(sor);
             tomb.push(sor);
         }
 
@@ -57,6 +56,22 @@ document.addEventListener('DOMContentLoaded', () => {
             li.innerHTML = p;
             adatok.appendChild(li);
         }
+    })
 
+    document.getElementById('length').addEventListener('click', async () => {
+        //Bekérés
+        let response = await fetch('./quotes.json');
+        let eredmeny = await response.json();
+
+        //Listába írás + formázás
+        let lista = [];
+        for(let p of eredmeny.quotes){
+            let szam = parseInt(p.quote.length);
+            lista.push(szam);
+            lista.join(',');
+        }
+
+        //Kiírása bekezdésbe
+        document.getElementById('hossz').textContent = lista;
     })
 })
