@@ -74,4 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
         //Kiírása bekezdésbe
         document.getElementById('hossz').textContent = lista;
     })
+
+    document.getElementById('szerzo').addEventListener('input', async () => {
+        //Bekérés
+        let response = await fetch('./quotes.json');
+        let eredmeny = await response.json();
+
+        //Részleges/Teljes keresés
+        let szerzoneve = document.getElementById('szerzo').value.toUpperCase();
+        if(document.getElementById('reszleges').checked){
+            let szam = eredmeny.quotes.filter(e => e.author.toUpperCase().includes(szerzoneve));
+            document.getElementById('darab').value = szam.length;
+        }else{
+            let szam = eredmeny.quotes.filter(e => e.author.toUpperCase() == szerzoneve);
+            document.getElementById('darab').value = szam.length;
+        }
+    })
 })
